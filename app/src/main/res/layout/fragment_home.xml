@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/linear2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/Temperature"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/temperature" />
+
+        <TextView
+            android:id="@+id/TemperatureText"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="start"
+            android:layout_weight="1"
+            android:text="@string/temperature"
+            tools:ignore="RtlCompat" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageButton
+            android:id="@+id/Weight"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/weight_kg" />
+
+        <TextView
+            android:id="@+id/WeightText"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/weight" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/linear2"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/Exchange"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="end"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/exchange" />
+
+        <TextView
+            android:id="@+id/ExchangeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:text="@string/exchange" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/linear5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear1">
+
+        <ImageButton
+            android:id="@+id/Energy"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/energy" />
+
+        <TextView
+            android:id="@+id/EnergyText"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="start"
+            android:layout_weight="1"
+            android:text="@string/energy"
+            tools:ignore="RtlCompat" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear2">
+
+
+        <ImageButton
+            android:id="@+id/Length"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/length" />
+
+        <TextView
+            android:id="@+id/LengthText"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/length" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/linear5"
+        app:layout_constraintTop_toBottomOf="@id/linear3">
+
+        <ImageButton
+            android:id="@+id/Liter"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="end"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/liter" />
+
+        <TextView
+            android:id="@+id/LiterText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:text="@string/liter" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

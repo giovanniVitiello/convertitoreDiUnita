@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Unit Converter</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Unit Converter</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_chronology">Chronology</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="temperature">temperature</string>
+    <string name="weight">weight</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="inserire_valore">enter value</string>
+    <string name="converti">convert</string>
+    <string name="text">text_home</string>
+    <string name="changeText">changeText</string>
+    <string name="prova">prova</string>
+    <string name="retry">result</string>
+    <string name="exchange">exchange</string>
+    <string name="callNetwork">callNetwork</string>
+    <string name="networkButton">network</string>
+    <string name="energy">energy</string>
+    <string name="length">length</string>
+    <string name="liter">liter</string>
+    <string name="email">giovanni.vitiello10@gmail.com</string>
+    <string name="unitConverter">unitConverter</string>
+</resources>
