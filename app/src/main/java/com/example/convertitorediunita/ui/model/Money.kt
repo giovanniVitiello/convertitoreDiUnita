@@ -21,6 +21,15 @@ data class Money(
         val gBP: Double?
     )
 
+    fun toEuro(): Double? {
+        Rates(rates?.eUR, rates?.gBP)
+        return rates?.eUR
+    }
+
+    fun toGbp(): Double? {
+        Rates(rates?.eUR, rates?.gBP)
+        return rates?.gBP
+    }
     /*function that convert Money data in MoneyUtil data, MoneyUtil is a class that take only necessary paramether*/
     fun toMoneyUtil(): MoneyUtil {
         return MoneyUtil(

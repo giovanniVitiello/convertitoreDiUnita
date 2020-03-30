@@ -1,5 +1,8 @@
 package com.example.convertitorediunita.ui.converter
 
+import android.app.Application
+import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.convertitorediunita.ui.model.MoneyUtil
@@ -41,14 +44,15 @@ sealed class MoneyUtilResult {
     data class Success(val money: MoneyUtil) : MoneyUtilResult()
 }
 
-class ConvertViewModel : ViewModel() {
+class ConvertViewModel(application: Application) : AndroidViewModel(application) {
 
     val result = MutableLiveData<ConvertState>()
 
     val state: MutableLiveData<ConvertState> = MutableLiveData()
 
-    private val conversion = Conversion()
+    private val conversion = Conversion(application)
 
+    @Suppress("ComplexMethod")
     fun sendEvent(event: ConvertEvent) {
         when (event) {
             is ConvertEvent.Load -> conversion.loadEuro(event.newString, state)

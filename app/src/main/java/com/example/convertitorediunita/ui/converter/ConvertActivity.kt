@@ -1,7 +1,9 @@
 package com.example.convertitorediunita.ui.converter
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -30,20 +32,22 @@ import com.example.convertitorediunita.ui.home.TEMPERATURE
 import com.example.convertitorediunita.ui.home.WEIGHT
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
+const val HIDE_KEYBOARD_TIME = 1000L
+
+@Suppress("LargeClass")
 class ConvertActivity : AppCompatActivity() {
 
-    lateinit var converterViewModel: ConvertViewModel
-    lateinit var activityConvert: ConstraintLayout
-    lateinit var insert: EditText
-    lateinit var result: TextView
-    lateinit var progressBar: ProgressBar
-    lateinit var spinner: Spinner
-    lateinit var saveButton: Button
-    lateinit var simpleDateFormat: SimpleDateFormat
-    lateinit var currentDateAndTime: String
+    private lateinit var converterViewModel: ConvertViewModel
+    private lateinit var activityConvert: ConstraintLayout
+    private lateinit var insert: EditText
+    private lateinit var result: TextView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var spinner: Spinner
+    private lateinit var saveButton: Button
+    private lateinit var simpleDateFormat: SimpleDateFormat
+    private lateinit var currentDateAndTime: String
     private val initialArraySpinner = mutableListOf<String>()
     private lateinit var arrayAdapter: ArrayAdapter<String>
 
@@ -53,12 +57,6 @@ class ConvertActivity : AppCompatActivity() {
         setContentView(R.layout.activity_convert)
 
         setupView()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val a = this.parent
-        Log.i("activity: %s", "$a")
     }
 
     private fun setupView() {
@@ -75,6 +73,7 @@ class ConvertActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(activityConvert.windowToken, 0)
     }
 
+    @Suppress("LongMethod", "ComplexMethod")
     override fun onStart() {
         Log.i("MainActivity", "onStart Called")
         super.onStart()
@@ -86,6 +85,7 @@ class ConvertActivity : AppCompatActivity() {
 
         spinner.adapter = arrayAdapter
 
+        @Suppress("LongMethod")
         fun elaborate(selectedItem: String) {
             when (selectedItem) {
                 "fahrenheit/celsius" -> {
@@ -186,7 +186,7 @@ class ConvertActivity : AppCompatActivity() {
                         is ConvertState.ReceiveGFromKg -> {
                             val kg: String = state.kg
                             result.text = kg
-                            conversion(kg, "arrayWeight", 0)
+                            conversion(kg, "arrayWeight", 1)
                         }
                     }
                 })
@@ -202,21 +202,20 @@ class ConvertActivity : AppCompatActivity() {
                         is ConvertState.InProgress -> showProgress()
                         is ConvertState.Error -> {
                             hideProgress()
+                            Handler().postDelayed({ hideKeyboard() }, HIDE_KEYBOARD_TIME)
                             showError(state.error)
                         }
                         is ConvertState.Success -> {
                             hideProgress()
                             val eUR = state.newString
                             result.text = eUR
-
                             conversion(eUR, "arrayNetwork", 0)
                         }
                         is ConvertState.SuccessGbp -> {
                             hideProgress()
                             val gBP = state.newStringGbp
                             result.text = gBP
-
-                            conversion(gBP, "arrayNetwork", 0)
+                            conversion(gBP, "arrayNetwork", 1)
                         }
                     }
                 })
@@ -301,6 +300,8 @@ class ConvertActivity : AppCompatActivity() {
 
     private fun conversion(typeConversion: String, typeArray: String, id: Int) {
 
+
+
         saveButton.setOnClickListener {
 
             saveDataExchange()
@@ -324,8 +325,7 @@ class ConvertActivity : AppCompatActivity() {
 
     private fun createIntent(typeArray: String): Array<String> {
         val intent = intent
-        val arraySpinner =
-            intent.getStringArrayExtra(typeArray)
+        val arraySpinner = intent.getStringArrayExtra(typeArray)
         initialArraySpinner.add(arraySpinner[0])
         initialArraySpinner.add(arraySpinner[1])
         arrayAdapter.notifyDataSetChanged()

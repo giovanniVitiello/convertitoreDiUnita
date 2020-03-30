@@ -62,6 +62,7 @@ class HomeFragment : Fragment() {
         lenght = view!!.findViewById(R.id.Length)
     }
 
+    @Suppress("LongMethod")
     override fun onStart() {
         super.onStart()
         temperature.setOnClickListener {

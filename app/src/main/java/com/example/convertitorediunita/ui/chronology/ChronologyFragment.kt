@@ -1,6 +1,7 @@
 package com.example.convertitorediunita.ui.chronology
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_chronology.*
 
 const val DELAY_UPLOAD_DATA = 500L
 
+
 class ChronologyFragment : Fragment() {
 
     companion object {
@@ -35,9 +37,14 @@ class ChronologyFragment : Fragment() {
             }
     }
 
+    var dateConversion: String? = null
+        private set
+    var typeConversion: String? = null
+        private set
+    var conversion: String? = null
+        private set
     private lateinit var chronologyViewModel: ChronologyViewModel
     private lateinit var chronologyAdapter: ChronologyAdapter
-    private lateinit var arrayNetwork: Array<String>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,8 +64,6 @@ class ChronologyFragment : Fragment() {
         chronologyAdapter = ChronologyAdapter()
         recyclerView.adapter = chronologyAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-
-        arrayNetwork = arrayOf("$/€", "$/£")
 
         val newConversion: Button = requireActivity().findViewById(R.id.new_conversion)
         val deleteButton: Button = requireActivity().findViewById(R.id.delete_data)
@@ -86,9 +91,9 @@ class ChronologyFragment : Fragment() {
 
         val args = this.arguments
         if (args != null && !args.isEmpty) {
-            val dateConversion = args.getString("date")
-            val typeConversion = args.getString("type")
-            val conversion = args.getString("conversion")
+            dateConversion = args.getString("date")
+            typeConversion = args.getString("type")
+            conversion = args.getString("conversion")
 
             chronologyViewModel.send(
                 ConversionEvent.AddConversion(
