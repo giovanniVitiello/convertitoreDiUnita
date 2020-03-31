@@ -1,7 +1,6 @@
 package com.example.convertitorediunita.ui.chronology
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -18,10 +17,9 @@ import com.example.convertitorediunita.MainActivity
 import com.example.convertitorediunita.R
 import com.example.convertitorediunita.db.Value
 import kotlin.random.Random
-import kotlinx.android.synthetic.main.fragment_chronology.*
+import kotlinx.android.synthetic.main.fragment_chronology.recyclerView
 
 const val DELAY_UPLOAD_DATA = 500L
-
 
 class ChronologyFragment : Fragment() {
 

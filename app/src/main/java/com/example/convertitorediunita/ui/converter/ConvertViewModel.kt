@@ -1,10 +1,8 @@
 package com.example.convertitorediunita.ui.converter
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.convertitorediunita.ui.model.MoneyUtil
 
 sealed class ConvertEvent {
@@ -27,6 +25,8 @@ sealed class ConvertState {
     data class Error(val error: Throwable) : ConvertState()
     data class Success(val newString: String) : ConvertState()
     data class SuccessGbp(val newStringGbp: String) : ConvertState()
+    data class SuccessWithoutNetwork(val newString: String) : ConvertState()
+    data class SuccessGbpWithoutNetwork(val newStringGbp: String) : ConvertState()
     data class ReceiveFahrenheitFromCel(val fahrenheit: String) : ConvertState()
     data class ReceiveCelsiusFromFahrenheit(val celsius: String) : ConvertState()
     data class ReceiveKgFromG(val g: String) : ConvertState()
@@ -42,6 +42,7 @@ sealed class ConvertState {
 sealed class MoneyUtilResult {
     data class Error(val error: Throwable) : MoneyUtilResult()
     data class Success(val money: MoneyUtil) : MoneyUtilResult()
+    data class SuccessWithoutNetwork(val money: MoneyUtil) : MoneyUtilResult()
 }
 
 class ConvertViewModel(application: Application) : AndroidViewModel(application) {

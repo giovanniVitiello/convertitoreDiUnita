@@ -1,7 +1,6 @@
 package com.example.convertitorediunita.ui.converter
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import com.example.convertitorediunita.MoneyUtilResultReceiver
 import com.example.convertitorediunita.RetrofitService
@@ -61,6 +60,12 @@ class Conversion(context: Context) {
                             val moneyDouble2F: Double? = moneyDouble?.times(ONE_HUNDRED)?.roundToInt()?.div(ONE_HUNDRED)
                             state.value = ConvertState.Success(moneyDouble2F.toString())
                         }
+                        is MoneyUtilResult.SuccessWithoutNetwork -> {
+                            val euroLast = result.money.rates?.eUR ?: 0.0
+                            val moneyDouble: Double? = euroLast.times(event.toDouble())
+                            val moneyDouble2F: Double? = moneyDouble?.times(ONE_HUNDRED)?.roundToInt()?.div(ONE_HUNDRED)
+                            state.value = ConvertState.SuccessWithoutNetwork(moneyDouble2F.toString())
+                        }
                     }.exhaustive
                 }
             })
@@ -83,6 +88,12 @@ class Conversion(context: Context) {
                             val moneyDouble: Double? = dollarLast.times(event.toDouble())
                             val moneyDouble2F: Double? = moneyDouble?.times(ONE_HUNDRED)?.roundToInt()?.div(ONE_HUNDRED)
                             state.value = ConvertState.SuccessGbp(moneyDouble2F.toString())
+                        }
+                        is MoneyUtilResult.SuccessWithoutNetwork -> {
+                            val dollarLast = result.money.rates?.gBP ?: 0.0
+                            val moneyDouble: Double? = dollarLast.times(event.toDouble())
+                            val moneyDouble2F: Double? = moneyDouble?.times(ONE_HUNDRED)?.roundToInt()?.div(ONE_HUNDRED)
+                            state.value = ConvertState.SuccessGbpWithoutNetwork(moneyDouble2F.toString())
                         }
                     }.exhaustive
                 }

@@ -33,4 +33,6 @@
     <string name="email">giovanni.vitiello10@gmail.com</string>
     <string name="unitConverter">unitConverter</string>
     <string name="data">data</string>
+    <string name="tassoDiCambio">Tasso di cambio:   </string>
+    <string name="save_value">Save value</string>
 </resources>

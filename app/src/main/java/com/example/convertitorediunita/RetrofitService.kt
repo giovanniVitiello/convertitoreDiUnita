@@ -3,12 +3,12 @@ package com.example.convertitorediunita
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import android.view.View
-import android.widget.TextView
-import com.example.convertitorediunita.ui.converter.ConvertActivity
 import com.example.convertitorediunita.ui.converter.MoneyUtilResult
 import com.example.convertitorediunita.ui.model.Money
 import com.example.convertitorediunita.ui.model.MoneyUtil
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -19,13 +19,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.logging.Handler
 
 private const val API_KEY = "35160723af91450bb52cb10b2a3c88ba"
 
-const val SHARED_PREFS_MAIN_NAME = "Euro"
+const val SHARED_PREFS_MAIN_NAME = "Money"
 const val SHARED_PREFS_EURO = "lastEuro"
 const val SHARED_PREFS_POUND = "lastDollar"
 const val SHARED_PREFS_DATA = "lastData"
@@ -41,7 +38,6 @@ class RetrofitService(val context: Context) {
     var euro = sharedPreferences.getFloat(SHARED_PREFS_EURO, 0f)
     var pound = sharedPreferences.getFloat(SHARED_PREFS_POUND, 0f)
     var data: String? = sharedPreferences.getString(SHARED_PREFS_DATA, " ")
-
 
     private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         this.level = HttpLoggingInterceptor.Level.BODY
@@ -82,13 +78,7 @@ class RetrofitService(val context: Context) {
 
                 if (euro.toDouble() != 0.0 && pound.toDouble() != 0.0) {
                     val moneyUtil = MoneyUtil(MoneyUtil.Rates(euro.toDouble(), pound.toDouble()))
-                    receveir.receive(MoneyUtilResult.Success(moneyUtil))
-
-//                    val contextConvertActivity = context as ConvertActivity
-//                    val data : TextView = contextConvertActivity.findViewById(R.id.data)
-//                    data.visibility = View.VISIBLE
-//                    Thread.sleep(2000)
-//                    data.visibility = View.GONE
+                    receveir.receive(MoneyUtilResult.SuccessWithoutNetwork(moneyUtil))
                 } else
                     receveir.receive(MoneyUtilResult.Error(Throwable("error")))
             }

@@ -23,6 +23,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.convertitorediunita.R
+import com.example.convertitorediunita.SHARED_PREFS_DATA
+import com.example.convertitorediunita.SHARED_PREFS_MAIN_NAME
 import com.example.convertitorediunita.ui.chronology.ChronologyFragment
 import com.example.convertitorediunita.ui.home.ENERGY
 import com.example.convertitorediunita.ui.home.LENGTH
@@ -32,11 +34,12 @@ import com.example.convertitorediunita.ui.home.TEMPERATURE
 import com.example.convertitorediunita.ui.home.WEIGHT
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
-const val HIDE_KEYBOARD_TIME = 1000L
+const val HIDE_KEYBOARD_TIME = 5000L
 
-@Suppress("LargeClass")
+@Suppress("LargeClass", "TooManyFunctions")
 class ConvertActivity : AppCompatActivity() {
 
     private lateinit var converterViewModel: ConvertViewModel
@@ -50,11 +53,14 @@ class ConvertActivity : AppCompatActivity() {
     private lateinit var currentDateAndTime: String
     private val initialArraySpinner = mutableListOf<String>()
     private lateinit var arrayAdapter: ArrayAdapter<String>
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var dataText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         converterViewModel = ViewModelProviders.of(this).get(ConvertViewModel::class.java)
         setContentView(R.layout.activity_convert)
+        sharedPreferences = getSharedPreferences(SHARED_PREFS_MAIN_NAME, Context.MODE_PRIVATE)
 
         setupView()
     }
@@ -66,6 +72,7 @@ class ConvertActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progress)
         spinner = findViewById(R.id.spinner)
         saveButton = findViewById(R.id.save_network)
+        dataText = findViewById(R.id.data)
     }
 
     private fun hideKeyboard() {
@@ -217,6 +224,20 @@ class ConvertActivity : AppCompatActivity() {
                             result.text = gBP
                             conversion(gBP, "arrayNetwork", 1)
                         }
+                        is ConvertState.SuccessWithoutNetwork -> {
+                            hideProgress()
+                            val eUR = state.newString
+                            result.text = eUR
+                            conversion(eUR, "arrayNetwork", 0)
+                            showDataConversion()
+                        }
+                        is ConvertState.SuccessGbpWithoutNetwork -> {
+                            hideProgress()
+                            val gBP = state.newStringGbp
+                            result.text = gBP
+                            conversion(gBP, "arrayNetwork", 1)
+                            showDataConversion()
+                        }
                     }
                 })
                 spinnerCall()
@@ -287,7 +308,14 @@ class ConvertActivity : AppCompatActivity() {
 
         insert.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                elaborate(spinner.selectedItem.toString())
+                if (insert.text.isEmpty()) {
+                    result.visibility = View.GONE
+                    saveButton.visibility = View.GONE
+                } else {
+                    result.visibility = View.VISIBLE
+                    saveButton.visibility = View.VISIBLE
+                    elaborate(spinner.selectedItem.toString())
+                }
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { /*emptyBlock*/
@@ -299,8 +327,6 @@ class ConvertActivity : AppCompatActivity() {
     }
 
     private fun conversion(typeConversion: String, typeArray: String, id: Int) {
-
-
 
         saveButton.setOnClickListener {
 
@@ -357,6 +383,17 @@ class ConvertActivity : AppCompatActivity() {
     private fun hideProgress() {
         progressBar.visibility = View.GONE
         result.visibility = View.VISIBLE
+    }
+
+    private fun showDataConversion() {
+        val dataConversion = sharedPreferences.getString(SHARED_PREFS_DATA, " ")
+        dataText.text = getString(R.string.tassoDiCambio).plus(dataConversion)
+        dataText.visibility = View.VISIBLE
+        Handler().postDelayed({ hideData() }, HIDE_KEYBOARD_TIME)
+    }
+
+    private fun hideData() {
+        dataText.visibility = View.GONE
     }
 
     private fun showError(error: Throwable) {
