@@ -25,9 +25,9 @@ class Conversion(context: Context) {
         )
     }
 
-    fun getCelsiusFromFahrenheit(fahrenait: String, result: MutableLiveData<ConvertState>) {
+    fun getCelsiusFromFahrenheit(fahrenheit: String, result: MutableLiveData<ConvertState>) {
         result.value = ConvertState.ReceiveCelsiusFromFahrenheit(
-            ((fahrenait.toDouble() - THIRTY_TWO) * FIVE / NINE)
+            ((fahrenheit.toDouble() - THIRTY_TWO) * FIVE / NINE)
                 .times(ONE_HUNDRED).roundToInt().div(ONE_HUNDRED).toString()
         )
     }
@@ -112,7 +112,7 @@ class Conversion(context: Context) {
 
     fun getKwhFromJoule(joule: String, result: MutableLiveData<ConvertState>) {
         result.value = ConvertState.ReceiveKwhFromJoule(
-            (joule.toDouble() / THIRTY_SIX * ONE_THOUSAND)
+            (joule.toDouble() / (THIRTY_SIX * ONE_THOUSAND))
                 .times(ONE_HUNDRED).roundToInt().div(ONE_HUNDRED).toString()
         )
     }
